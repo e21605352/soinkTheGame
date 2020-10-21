@@ -7,3 +7,4 @@ extends KinematicBody
 onready var camera: CameraRig = $CameraRig
 onready var skin: Mannequiny = $Soink
 onready var state_machine: StateMachine = $StateMachine
+onready var sfx: Node = $SFX

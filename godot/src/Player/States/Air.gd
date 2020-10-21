@@ -1,7 +1,6 @@
 extends PlayerState
 # State for when the player is jumping and falling.
 
-
 func physics_process(delta: float) -> void:
 	_parent.physics_process(delta)
 
@@ -15,6 +14,7 @@ func enter(msg: Dictionary = {}) -> void:
 	match msg:
 		{"velocity": var v, "jump_impulse": var ji}:
 			_parent.velocity = v + Vector3(0, ji, 0)
+			player.sfx.get_node("Jump-SFX").play()
 	skin.transition_to(skin.States.AIR)
 	_parent.enter()
 

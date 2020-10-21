@@ -4,19 +4,28 @@ extends PlayerState
 # Child states can override this state's functions or change its properties.
 # This keeps the logic grouped in one location.
 
+export var run_speed = 10.0
+export var max_run_speed: = 12.0
+export var sprint_speed = 50.0
+export var max_sprint_speed = 52.0
 
-export var max_speed: = 12.0
-export var move_speed: = 10.0
 export var gravity = -80.0
 export var jump_impulse = 25
 export(float, 0.1, 20.0, 0.1) var rotation_speed_factor: = 10.0
 
+var move_speed: float
+var max_speed: float
 var velocity: = Vector3.ZERO
 
 
+func _ready() -> void:
+	move_speed = run_speed
+	max_speed = max_run_speed
+
 func unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
-		_state_machine.transition_to("Move/Air", { velocity = velocity, jump_impulse = jump_impulse })
+#		_state_machine.transition_to("Move/Air", { velocity = velocity, jump_impulse = jump_impulse })
+		_state_machine.transition_to("Move/Sprint", { is_sprinting = true })
 
 
 func physics_process(delta: float) -> void:

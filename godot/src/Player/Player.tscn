@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/jump.wav" type="AudioStream" id=2]
 [ext_resource path="res://src/Main/StateMachine/StateMachine.gd" type="Script" id=3]
 [ext_resource path="res://src/Player/States/Move.gd" type="Script" id=4]
 [ext_resource path="res://src/Player/States/Idle.gd" type="Script" id=5]
@@ -9,10 +10,11 @@
 [ext_resource path="res://src/Player/Camera/CameraRig.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/Player/Soink.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/Player/Mannequiny.gd" type="Script" id=10]
+[ext_resource path="res://src/Player/States/Sprint.gd" type="Script" id=11]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
-[sub_resource type="CylinderShape" id=3]
+[sub_resource type="CylinderShape" id=2]
 height = 2.17174
 
 [node name="Player" type="KinematicBody"]
@@ -35,6 +37,9 @@ script = ExtResource( 6 )
 [node name="Run" type="Node" parent="StateMachine/Move"]
 script = ExtResource( 7 )
 
+[node name="Sprint" type="Node" parent="StateMachine/Move"]
+script = ExtResource( 11 )
+
 [node name="CameraRig" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38644, 0 )
 
@@ -43,10 +48,16 @@ transform = Transform( -0.373242, 0, -3.26299e-08, 0, 0.373242, 0, 3.26299e-08, 
 script = ExtResource( 10 )
 
 [node name="AnimationTree" parent="Soink" index="2"]
-parameters/playback = SubResource( 4 )
+parameters/playback = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.708158, 0, 0, 0, 0.790238, 0, 0, 0, 0.495577, 0, 0.889206, -0.0547206 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Jump-SFX" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 2 )
+volume_db = -30.0
 
 [editable path="Soink"]

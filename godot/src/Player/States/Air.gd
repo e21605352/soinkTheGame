@@ -16,6 +16,7 @@ func enter(msg: Dictionary = {}) -> void:
 			_parent.velocity = v + Vector3(0, ji, 0)
 			player.sfx.get_node("Jump-SFX").play()
 	skin.transition_to(skin.States.AIR)
+	player.death_camera.current = true
 	_parent.enter()
 
 

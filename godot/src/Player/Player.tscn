@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/jump.wav" type="AudioStream" id=2]
@@ -17,6 +17,9 @@
 
 [sub_resource type="CylinderShape" id=2]
 height = 2.17174
+
+[sub_resource type="Animation" id=3]
+resource_name = "soink-death-cam"
 
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -63,5 +66,11 @@ volume_db = -30.0
 
 [node name="Sprint-SFX" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 12 )
+
+[node name="DeathCam" type="Camera" parent="."]
+transform = Transform( -0.944915, -0.172622, 0.278097, -0.0514688, 0.917417, 0.394585, -0.323245, 0.358536, -0.875765, 0.859096, 2.82904, -2.67941 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DeathCam"]
+anims/soink-death-cam = SubResource( 3 )
 
 [editable path="Soink"]

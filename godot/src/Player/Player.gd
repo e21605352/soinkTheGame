@@ -5,6 +5,7 @@ extends KinematicBody
 # camera and its orientation.
 
 onready var camera: CameraRig = $CameraRig
+onready var death_camera: Camera = $DeathCam
 onready var skin: Mannequiny = $Soink
 onready var state_machine: StateMachine = $StateMachine
 onready var sfx: Node = $SFX

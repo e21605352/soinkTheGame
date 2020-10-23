@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/3d/level/level_environment.tres" type="Environment" id=4]
 [ext_resource path="res://src/Level/Playground.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/sounds/music.wav" type="AudioStream" id=6]
-[ext_resource path="res://assets/sounds/sprint.wav" type="AudioStream" id=7]
+[ext_resource path="res://src/Components/Ring.tscn" type="PackedScene" id=7]
 
 [sub_resource type="PlaneMesh" id=1]
 size = Vector2( 100, 100 )
@@ -21,9 +21,6 @@ script = ExtResource( 3 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58673, -0.0176746, -5.36121 )
 collision_mask = 2
-
-[node name="Sprint-SFX" type="AudioStreamPlayer" parent="Player/SFX" index="1"]
-stream = ExtResource( 7 )
 
 [node name="Playground" parent="." instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -16 )
@@ -49,6 +46,23 @@ environment = ExtResource( 4 )
 stream = ExtResource( 6 )
 volume_db = -25.0
 
-[editable path="Player"]
+[node name="Rings" type="Spatial" parent="."]
 
-[editable path="Player/CameraRig"]
+[node name="Ring" parent="Rings" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14634, 0 )
+
+[node name="Ring2" parent="Rings" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14634, 1.70407 )
+
+[node name="Ring3" parent="Rings" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14634, 3.15377 )
+
+[node name="Ring4" parent="Rings" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14634, 4.95152 )
+
+[node name="Ring5" parent="Rings" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14634, 6.6706 )
+
+[node name="Ring6" parent="Rings" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14634, 8.42849 )
+[connection signal="finished" from="AudioStreamPlayer" to="Rings/Ring" method="_on_AudioStreamPlayer_finished"]

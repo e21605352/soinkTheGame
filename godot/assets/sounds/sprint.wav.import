@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sprint.wav-d813b949e509036667b04bd1aee3dbba.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sprint.wav"
+dest_files=[ "res://.import/sprint.wav-d813b949e509036667b04bd1aee3dbba.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

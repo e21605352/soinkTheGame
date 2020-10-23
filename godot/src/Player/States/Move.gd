@@ -5,27 +5,25 @@ extends PlayerState
 # This keeps the logic grouped in one location.
 
 export var run_speed = 10.0
-export var max_run_speed: = 12.0
 export var sprint_speed = 50.0
-export var max_sprint_speed = 52.0
-
 export var gravity = -80.0
 export var jump_impulse = 25
 export(float, 0.1, 20.0, 0.1) var rotation_speed_factor: = 10.0
 
 var move_speed: float
-var max_speed: float
+var is_sprinting: bool
 var velocity: = Vector3.ZERO
 
 
 func _ready() -> void:
 	move_speed = run_speed
-	max_speed = max_run_speed
+	is_sprinting = false
 
 func unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
-#		_state_machine.transition_to("Move/Air", { velocity = velocity, jump_impulse = jump_impulse })
-		_state_machine.transition_to("Move/Sprint", { is_sprinting = true })
+		_state_machine.transition_to("Move/Air", { velocity = velocity, jump_impulse = jump_impulse })
+	elif event.is_action_pressed("toggle_sprint"):
+		_state_machine.transition_to("Move/Sprint", { is_sprinting = is_sprinting })
 
 
 func physics_process(delta: float) -> void:
@@ -80,8 +78,8 @@ func calculate_velocity(
 		delta: float
 	) -> Vector3:
 		var velocity_new := move_direction * move_speed
-		if velocity_new.length() > max_speed:
-			velocity_new = velocity_new.normalized() * max_speed
+		if velocity_new.length() > move_speed:
+			velocity_new = velocity_new.normalized() * move_speed
 		velocity_new.y = velocity_current.y + gravity * delta
 
 		return velocity_new

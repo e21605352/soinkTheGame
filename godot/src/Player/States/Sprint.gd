@@ -1,6 +1,4 @@
 extends PlayerState
-# State for when there is no movement input.
-# Supports triggering jump after the player started to fall.
 
 func physics_process(delta: float) -> void:
 	_parent.physics_process(delta)
@@ -13,12 +11,20 @@ func physics_process(delta: float) -> void:
 func enter(msg: Dictionary = {}) -> void:
 		match msg:
 			{"is_sprinting": var sprint}:
-				if is_sprinting = false:
+				if sprint == false:
 					if _parent.velocity.length() > 0.01:
-						_parent.move_speed = 50
-						_parent.max_speed = 50
-						_parent.is_sprinting
-
+						_parent.move_speed = _parent.sprint_speed
+						_parent.is_sprinting = true
+						player.sfx.get_node("Sprint-SFX").play()
+				else:
+					_parent.move_speed = _parent.run_speed
+					_parent.is_sprinting = false
+					player.sfx.get_node("Sprint-SFX").stop()
+		_parent.enter()
 
 func exit() -> void:
 	_parent.exit()
+
+func _process(delta):
+	if player.sfx.get_node("Sprint-SFX").playing == false and _parent.is_sprinting == true:
+		player.sfx.get_node("Sprint-SFX").play()

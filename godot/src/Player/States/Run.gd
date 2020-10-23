@@ -17,7 +17,10 @@ func physics_process(delta: float) -> void:
 
 
 func enter(msg: = {}) -> void:
-	skin.transition_to(skin.States.RUN)
+	if _parent.is_sprinting:
+		skin.transition_to(skin.States.AIR)
+	else:
+		skin.transition_to(skin.States.RUN)
 	skin.is_moving = true
 	_parent.enter()
 

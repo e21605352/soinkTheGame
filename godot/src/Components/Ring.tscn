@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/3d/ring/material-coin.material" type="Material" id=1]
-[ext_resource path="res://src/Components/Ring.gd" type="Script" id=2]
+[ext_resource path="res://src/Components/Scripts/Ring.gd" type="Script" id=2]
 [ext_resource path="res://assets/sounds/rings.wav" type="AudioStream" id=3]
+[ext_resource path="res://src/Components/Scripts/Ring-SFX.gd" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "ring"
@@ -35,6 +36,7 @@ shape = SubResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-
-[node name="CPUParticles" type="CPUParticles" parent="."]
+script = ExtResource( 4 )
 [connection signal="body_entered" from="." to="." method="_on_Ring_body_entered"]
+[connection signal="ring_collected" from="." to="AudioStreamPlayer" method="_on_ring_collected"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]

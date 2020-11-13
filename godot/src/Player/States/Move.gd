@@ -20,33 +20,40 @@ func _ready() -> void:
 	is_sprinting = false
 
 func unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("jump"):
-		_state_machine.transition_to("Move/Air", { velocity = velocity, jump_impulse = jump_impulse })
-	elif event.is_action_pressed("toggle_sprint"):
-		_state_machine.transition_to("Move/Sprint", { is_sprinting = is_sprinting })
+	if !Game.game_finished:
+		if event.is_action_pressed("jump"):
+			_state_machine.transition_to("Move/Air", { velocity = velocity, jump_impulse = jump_impulse })
+		elif event.is_action_pressed("toggle_sprint"):
+			_state_machine.transition_to("Move/Sprint", { is_sprinting = is_sprinting })
 
 
 func physics_process(delta: float) -> void:
-	var input_direction: = get_input_direction()
+	if !Game.game_finished:
+		var input_direction: = get_input_direction()
 
-	# Calculate a move direction vector relative to the camera
-	# The basis stores the (right, up, -forwards) vectors of our camera.
-	var forwards: Vector3 = player.camera.global_transform.basis.z * input_direction.z
-	var right: Vector3 = player.camera.global_transform.basis.x * input_direction.x
-	var move_direction: = forwards + right
-	if move_direction.length() > 1.0:
-		move_direction = move_direction.normalized()
-	move_direction.y = 0
-	skin.move_direction = move_direction
+		# Calculate a move direction vector relative to the camera
+		# The basis stores the (right, up, -forwards) vectors of our camera.
+		var forwards: Vector3 = player.camera.global_transform.basis.z * input_direction.z
+		var right: Vector3 = player.camera.global_transform.basis.x * input_direction.x
+		var move_direction: = forwards + right
+		if move_direction.length() > 1.0:
+			move_direction = move_direction.normalized()
+		move_direction.y = 0
+		skin.move_direction = move_direction
 
-	# Rotation
-	if move_direction:
-		var target_direction: = player.transform.looking_at(player.global_transform.origin + move_direction, Vector3.UP)
-		player.transform = player.transform.interpolate_with(target_direction, rotation_speed_factor * delta)
+		# Rotation
+		if move_direction:
+			var target_direction: = player.transform.looking_at(player.global_transform.origin + move_direction, Vector3.UP)
+			player.transform = player.transform.interpolate_with(target_direction, rotation_speed_factor * delta)
 
-	# Movement
-	velocity = calculate_velocity(velocity, move_direction, delta)
-	velocity = player.move_and_slide(velocity, Vector3.UP)
+		# Movement
+		velocity = calculate_velocity(velocity, move_direction, delta)
+		velocity = player.move_and_slide(velocity, Vector3.UP)
+	elif skin.is_moving:
+		if is_sprinting:
+			_state_machine.transition_to("Move/Sprint", { is_sprinting = is_sprinting })
+		else:
+			_state_machine.transition_to("Move/Idle")
 
 
 func enter(msg: Dictionary = {}) -> void:

@@ -48,7 +48,6 @@ func enter(msg: Dictionary = {}) -> void:
 					# Stop epic gotta go fast music
 					player.sfx.get_node("Sprint-SFX").stop()
 					emit_signal("sprint_finished")
-					
 		_parent.enter()
 
 func exit() -> void:

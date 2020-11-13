@@ -63,8 +63,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Soink the Game"
-run/main_scene="res://src/Main/Game.tscn"
+run/main_scene="res://src/Menus/TitleScreen.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Game="*res://src/Main/Game.gd"
+SceneChanger="*res://src/Menus/Transitions/SceneChanger.tscn"
 
 [display]
 

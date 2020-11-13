@@ -10,10 +10,9 @@ func _process(delta):
 		play()
 
 
-func _on_sprint_started():
-	set_stream_paused(true)
-
-
-
 func _on_sprint_finished():
 	set_stream_paused(false)
+
+
+func _on_sprint_started():
+	set_stream_paused(true)

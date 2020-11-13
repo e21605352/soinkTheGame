@@ -134,7 +134,6 @@ TestResult.xml
 *_i.h
 *.ilk
 *.meta
-*.obj
 *.pch
 *.pdb
 *.pgc

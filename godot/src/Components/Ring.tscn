@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/3d/ring/material-coin.material" type="Material" id=1]
 [ext_resource path="res://src/Components/Scripts/Ring.gd" type="Script" id=2]
-[ext_resource path="res://assets/sounds/rings.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/sfx/rings.wav" type="AudioStream" id=3]
 [ext_resource path="res://src/Components/Scripts/Ring-SFX.gd" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=1]

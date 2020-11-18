@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/textures/soink_roll.png" type="Texture" id=1]
 [ext_resource path="res://assets/3d/light/light.obj" type="ArrayMesh" id=2]
@@ -9,10 +9,27 @@
 albedo_texture = ExtResource( 1 )
 uv1_offset = Vector3( -0.02, 0.163, 0 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "roll"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Mesh:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -180, 0, 0 ), Vector3( -360, 0, 0 ) ]
+}
+
 [node name="SoinkRoll" type="Spatial"]
 
 [node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( 0.646634, 0, 0, 0, 0.646634, 0, 0, 0, 0.646634, 0, 0.647, 0 )
+transform = Transform( 0.646634, 0, 0, 0, 0.646634, 4.214e-07, 0, -4.214e-07, 0.646634, 0, 0.647, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
@@ -29,3 +46,7 @@ gravity = Vector3( 0, 0, 0 )
 initial_velocity = 5.0
 scale_amount = 2.0
 scale_amount_random = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "roll"
+anims/roll = SubResource( 3 )

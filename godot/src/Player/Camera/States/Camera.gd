@@ -38,12 +38,12 @@ func process(delta: float) -> void:
 		and move_direction.x <= deadzone
 	)
 	if not (is_moving_towards_camera or _is_aiming):
-		auto_rotate(move_direction)
+		auto_rotate()
 
 	camera_rig.rotation.y = wrapf(camera_rig.rotation.y, -PI, PI)
 
 
-func auto_rotate(move_direction: Vector3) -> void:
+func auto_rotate() -> void:
 	var offset: float = camera_rig.player.rotation.y - camera_rig.rotation.y
 	var target_angle: float = (
 		camera_rig.player.rotation.y - 2 * PI

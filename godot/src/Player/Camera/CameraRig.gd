@@ -2,8 +2,6 @@ tool
 extends Spatial
 class_name CameraRig
 
-signal aim_fired(target_position)
-
 onready var camera: InterpolatedCamera = $InterpolatedCamera
 onready var spring_arm: SpringArm = $SpringArm
 onready var aim_ray: RayCast = $InterpolatedCamera/AimRay

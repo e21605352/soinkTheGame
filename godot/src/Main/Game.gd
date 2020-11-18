@@ -1,9 +1,9 @@
 extends Node
 
-onready var game_finished := false
+var game_finished := false
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _input(event: InputEvent) -> void:

@@ -1,13 +1,12 @@
 extends Spatial
 class_name Soink
 
-enum States { IDLE, RUN, AIR, LAND }
+enum States { IDLE, RUN, AIR, ATTACK, ANIM1, ANIM2, ANIM3 }
 
-onready var animation_tree: AnimationTree = $AnimationTree
+onready var animation_tree: AnimationTree = $Default/AnimationTree
 onready var _playback: AnimationNodeStateMachinePlayback = animation_tree["parameters/playback"]
 
 var move_direction := Vector3.ZERO setget set_move_direction
-var is_moving := false setget set_is_moving
 
 
 func _ready() -> void:
@@ -19,20 +18,21 @@ func set_move_direction(direction: Vector3) -> void:
 	animation_tree["parameters/move_ground/blend_position"] = direction.length()
 
 
-func set_is_moving(value: bool) -> void:
-	is_moving = value
-	animation_tree["parameters/conditions/is_moving"] = value
-
-
 func transition_to(state_id: int) -> void:
 	match state_id:
 		States.IDLE:
 			_playback.travel("idle")
-		States.LAND:
-			_playback.travel("land")
 		States.RUN:
 			_playback.travel("move_ground")
 		States.AIR:
 			_playback.travel("jump")
+		States.ATTACK:
+			_playback.travel("attack")
+		States.ANIM1:
+			_playback.travel("soink-twerk")
+		States.ANIM2:
+			_playback.travel("soink-female-pose")
+		States.ANIM3:
+			_playback.travel("soink-rumba")
 		_:
 			_playback.travel("idle")

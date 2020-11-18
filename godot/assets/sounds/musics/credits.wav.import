@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/credits.wav-31c484b5c405fdfdb9af7e4907f9c5d5.sample"
+
+[deps]
+
+source_file="res://assets/sounds/musics/credits.wav"
+dest_files=[ "res://.import/credits.wav-31c484b5c405fdfdb9af7e4907f9c5d5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

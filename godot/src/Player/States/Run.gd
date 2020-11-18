@@ -1,5 +1,4 @@
 extends PlayerState
-# Basic state when the player is moving around until jumping or lack of input.
 
 
 func unhandled_input(event: InputEvent) -> void:
@@ -16,15 +15,13 @@ func physics_process(delta: float) -> void:
 
 
 
-func enter(msg: = {}) -> void:
+func enter(_msg: Dictionary = {}) -> void:
 	if _parent.is_sprinting:
 		skin.transition_to(skin.States.AIR)
 	else:
 		skin.transition_to(skin.States.RUN)
-	skin.is_moving = true
 	_parent.enter()
 
 
 func exit() -> void:
-	skin.is_moving = false
 	_parent.exit()

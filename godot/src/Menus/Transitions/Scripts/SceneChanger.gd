@@ -10,4 +10,5 @@ func change_scene(new_scene, anim):
 
 
 func _new_scene():
-	get_tree().change_scene(scene)
+	if get_tree().change_scene(scene) != OK:
+		print ("An unexpected error occured when trying to switch to " + scene + " scene")

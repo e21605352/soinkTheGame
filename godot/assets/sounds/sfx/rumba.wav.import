@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/rumba.wav-3b876bee9dc6a9e9a7e4875a2b16e2a8.sample"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/rumba.wav"
+dest_files=[ "res://.import/rumba.wav-3b876bee9dc6a9e9a7e4875a2b16e2a8.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

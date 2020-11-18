@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://assets/sounds/credits.wav" type="AudioStream" id=1]
+[ext_resource path="res://assets/sounds/musics/credits.wav" type="AudioStream" id=1]
 [ext_resource path="res://assets/videos/credits.webm" type="VideoStream" id=2]
 [ext_resource path="res://src/Menus/Scripts/Credits.gd" type="Script" id=3]
 

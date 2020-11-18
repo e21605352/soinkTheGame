@@ -1,20 +1,25 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/Player/Scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/sounds/jump.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/sfx/jump.wav" type="AudioStream" id=2]
 [ext_resource path="res://src/StateMachine/StateMachine.gd" type="Script" id=3]
 [ext_resource path="res://src/Player/States/Move.gd" type="Script" id=4]
 [ext_resource path="res://src/Player/States/Idle.gd" type="Script" id=5]
 [ext_resource path="res://src/Player/States/Air.gd" type="Script" id=6]
 [ext_resource path="res://src/Player/States/Run.gd" type="Script" id=7]
 [ext_resource path="res://src/Player/Camera/CameraRig.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/Player/Soink.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/Player/SoinkDefault.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/Player/Scripts/Soink.gd" type="Script" id=10]
-[ext_resource path="res://src/Player/States/Sprint.gd" type="Script" id=11]
-[ext_resource path="res://assets/sounds/sprint.wav" type="AudioStream" id=12]
-[ext_resource path="res://src/Player/Scripts/Sprint-SFX.gd" type="Script" id=13]
+[ext_resource path="res://assets/sounds/sfx/rumba.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/sounds/sfx/sprint.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/sounds/sfx/twerk.wav" type="AudioStream" id=13]
 [ext_resource path="res://src/Player/SoinkRoll.tscn" type="PackedScene" id=14]
-[ext_resource path="res://src/Player/Scripts/SoinkRoll.gd" type="Script" id=15]
+[ext_resource path="res://src/Player/Scripts/CollisionShape.gd" type="Script" id=15]
+[ext_resource path="res://src/Player/States/Animation.gd" type="Script" id=16]
+[ext_resource path="res://assets/sounds/sfx/female.wav" type="AudioStream" id=17]
+[ext_resource path="res://assets/3d/heart/heart.obj" type="ArrayMesh" id=18]
+[ext_resource path="res://src/Player/Scripts/Attack.gd" type="Script" id=19]
+[ext_resource path="res://assets/sounds/sfx/attack.wav" type="AudioStream" id=20]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
@@ -22,26 +27,40 @@
 radius = 0.916081
 height = 2.2
 
+[sub_resource type="Animation" id=3]
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -180, 0 ), Vector3( 0, -360, 0 ) ]
+}
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.217522, 0.221417, 0.213357 )
+
 [node name="Player" type="KinematicBody"]
 script = ExtResource( 1 )
 
-[node name="Soink" parent="." instance=ExtResource( 9 )]
-transform = Transform( -0.373242, 0, -3.26299e-08, 0, 0.373242, 0, 3.26299e-08, 0, -0.373242, 0, 0, 0 )
+[node name="Soink" type="Spatial" parent="."]
 script = ExtResource( 10 )
 
-[node name="AnimationTree" parent="Soink" index="2"]
+[node name="Default" parent="Soink" instance=ExtResource( 9 )]
+transform = Transform( -0.373, 0, 1.21539e-07, 0, 0.373, 0, -1.21539e-07, 0, -0.373, 0, 0, 0 )
+
+[node name="AnimationTree" parent="Soink/Default" index="2"]
 parameters/playback = SubResource( 1 )
 
-[node name="SoinkRoll" parent="." instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889885, 0 )
+[node name="Roll" parent="Soink" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.241449, 0 )
 visible = false
-script = ExtResource( 15 )
-
-[node name="Mesh" parent="SoinkRoll" index="0"]
-transform = Transform( 0.646634, 0, 0, 0, 0.646634, 0, 0, 0, 0.646634, 0, 0, 0 )
-
-[node name="LightParticules" parent="SoinkRoll" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.456, 0.219247, 0 )
 
 [node name="CameraRig" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.38644, 0 )
@@ -50,6 +69,7 @@ visible = false
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.708158, 0, 0, 0, 0.790238, 0, 0, 0, 0.495577, 0, 0.889, 0 )
 shape = SubResource( 2 )
+script = ExtResource( 15 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -63,7 +83,20 @@ volume_db = -30.0
 [node name="Sprint-SFX" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 12 )
 volume_db = -20.0
-script = ExtResource( 13 )
+
+[node name="Twerk-SFX" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 13 )
+
+[node name="Dame-SFX" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 17 )
+volume_db = -20.0
+
+[node name="Rumba-SFX" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 11 )
+volume_db = -20.0
+
+[node name="Attack-SFX" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 20 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -82,11 +115,48 @@ script = ExtResource( 6 )
 [node name="Run" type="Node" parent="StateMachine/Move"]
 script = ExtResource( 7 )
 
-[node name="Sprint" type="Node" parent="StateMachine/Move"]
-script = ExtResource( 11 )
-[connection signal="sprint_finished" from="StateMachine/Move/Sprint" to="SFX/Sprint-SFX" method="_on_sprint_finished"]
-[connection signal="sprint_started" from="StateMachine/Move/Sprint" to="SFX/Sprint-SFX" method="_on_sprint_started"]
+[node name="Animation" type="Node" parent="StateMachine/Move"]
+script = ExtResource( 16 )
 
-[editable path="Soink"]
+[node name="Attack" type="Node" parent="StateMachine/Move"]
+script = ExtResource( 19 )
 
-[editable path="SoinkRoll"]
+[node name="Timer" type="Timer" parent="StateMachine/Move/Attack"]
+wait_time = 1.63
+one_shot = true
+
+[node name="DameCam" type="Spatial" parent="."]
+transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="DameCam"]
+transform = Transform( -1, 7.10543e-15, -8.74228e-08, -2.02793e-08, 0.972723, 0.231969, 8.50382e-08, 0.231969, -0.972723, 0, 1.41129, -2.73916 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DameCam"]
+anims/turn-around = SubResource( 3 )
+
+[node name="HeartParticules" type="CPUParticles" parent="DameCam"]
+transform = Transform( 0.4053, 0, 0, 0, 0.4053, 0, 0, 0, 0.4053, 0.220436, 1.32601, -0.116119 )
+emitting = false
+amount = 4
+lifetime = 2.0
+mesh = ExtResource( 18 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_align_y = true
+direction = Vector3( 50, 50, 50 )
+spread = 180.0
+gravity = Vector3( 0, 2, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.5
+angle = 360.0
+angle_random = 1.0
+scale_amount = 0.03
+scale_amount_random = 0.03
+
+[node name="HitBox" type="Area" parent="."]
+transform = Transform( 2.78983, 0, 0, 0, 0.891188, 0, 0, 0, 1.92559, 0, 0.843, -0.917 )
+
+[node name="CollisionShape" type="CollisionShape" parent="HitBox"]
+shape = SubResource( 4 )
+
+[editable path="Soink/Default"]
